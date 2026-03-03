@@ -1,0 +1,2 @@
+# Python dependencies for test framework
+requests>=2.28.0
