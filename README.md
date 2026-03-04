@@ -8,6 +8,10 @@
 fiv-jenkins/
 ├── install_jenkins.sh      # Jenkins 安装脚本 (Ubuntu)
 ├── Jenkinsfile             # Jenkins Pipeline 配置
+├── Dockerfile              # Docker 镜像构建文件
+├── docker-compose.yml      # Docker Compose 编排文件
+├── .dockerignore           # Docker 构建忽略文件
+├── .gitignore              # Git 忽略文件
 ├── requirements.txt        # Python 依赖
 ├── .env.example            # 邮件配置示例
 ├── scripts/
@@ -20,7 +24,30 @@ fiv-jenkins/
 
 ## 🚀 快速开始
 
-### 1. 安装 Jenkins (Ubuntu)
+### 1a. Docker 方式部署（推荐）
+
+```bash
+# 克隆项目
+git clone <your-repo> /opt/fiv-jenkins
+cd /opt/fiv-jenkins
+
+# 复制环境变量配置文件并填写实际值
+cp .env.example .env
+# 编辑 .env 填入 SMTP 和邮件配置
+
+# 构建并启动容器
+docker compose up -d --build
+
+# 查看 Jenkins 日志
+docker compose logs -f jenkins
+
+# 停止容器
+docker compose down
+```
+
+容器启动后访问 http://localhost:8080 即可使用 Jenkins（已跳过初始设置向导并预装所需插件）。
+
+### 1b. 直接安装 Jenkins (Ubuntu)
 
 ```bash
 # 下载项目到 Ubuntu 服务器

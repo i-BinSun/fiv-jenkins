@@ -22,13 +22,14 @@ pipeline {
     }
     
     environment {
-        // Email configuration - Set these in Jenkins credentials or environment
-        SMTP_SERVER = credentials('smtp-server') ?: 'smtp.gmail.com'
-        SMTP_PORT = '587'
-        SMTP_USER = credentials('smtp-user')
-        SMTP_PASSWORD = credentials('smtp-password')
-        EMAIL_SENDER = credentials('email-sender')
-        EMAIL_RECIPIENTS = credentials('email-recipients')
+        // Email configuration
+        // When running in Docker, these are injected via docker-compose env_file (.env)
+        // When running standalone, set these in Jenkins credentials:
+          SMTP_SERVER = credentials('smtp-server')
+          SMTP_USER = credentials('smtp-user')
+          SMTP_PASSWORD = credentials('smtp-password')
+          EMAIL_SENDER = credentials('email-sender')
+          EMAIL_RECIPIENTS = credentials('email-recipients')
         
         // Python virtual environment
         VENV_DIR = "${WORKSPACE}/venv"

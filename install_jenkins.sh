@@ -3,10 +3,28 @@
 # Run this script with: sudo bash install_jenkins.sh
 
 set -e
+set -o pipefail
 
 echo "=========================================="
 echo "Jenkins Installation Script for Ubuntu"
 echo "=========================================="
+echo "Tip: if your network requires proxy, run with: sudo -E bash install_jenkins.sh"
+
+KEY_URL="https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key"
+KEY_FILE="/usr/share/keyrings/jenkins-keyring.asc"
+
+diagnose_jenkins_key_download() {
+  echo ""
+  echo "[ERROR] Failed to download Jenkins repository key."
+  echo "[DIAG] Proxy env (current sudo shell):"
+  env | grep -Ei '^(http_proxy|https_proxy|no_proxy)=' || echo "(not set)"
+  echo "[DIAG] DNS lookup for pkg.jenkins.io:"
+  getent hosts pkg.jenkins.io || echo "DNS lookup failed"
+  echo "[DIAG] HTTPS HEAD request (10s timeout):"
+  timeout 10s curl -I -v "$KEY_URL" | cat || echo "HEAD request failed or timed out"
+  echo "[HINT] If you are behind a proxy, use: sudo -E bash install_jenkins.sh"
+  echo ""
+}
 
 # Update system packages
 echo "[1/6] Updating system packages..."
@@ -20,10 +38,15 @@ java -version
 
 # Add Jenkins repository key
 echo "[3/6] Adding Jenkins repository..."
-curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | tee \
-  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+mkdir -p /usr/share/keyrings
+if ! curl -fL --connect-timeout 10 --max-time 60 --retry 3 --retry-delay 2 \
+  "$KEY_URL" \
+  -o "$KEY_FILE"; then
+  diagnose_jenkins_key_download
+  exit 1
+fi
 
-echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+echo "deb [signed-by=$KEY_FILE]" \
   https://pkg.jenkins.io/debian-stable binary/ | tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 
@@ -46,21 +69,21 @@ echo "Waiting for Jenkins to start..."
 sleep 30
 
 # Get initial admin password
-echo "=========================================="
-echo "Jenkins installation completed!"
-echo "=========================================="
-echo ""
-echo "Access Jenkins at: http://localhost:8080"
-echo ""
-echo "Initial Admin Password:"
+printf '%s\n' "=========================================="
+printf '%s\n' "Jenkins installation completed!"
+printf '%s\n' "=========================================="
+printf '\n'
+printf '%s\n' "Access Jenkins at: http://localhost:8080"
+printf '\n'
+printf '%s\n' "Initial Admin Password:"
 cat /var/lib/jenkins/secrets/initialAdminPassword
-echo ""
-echo "=========================================="
-echo ""
-echo "Next steps:"
-echo "1. Open http://localhost:8080 in your browser"
-echo "2. Enter the initial admin password shown above"
-echo "3. Install suggested plugins"
-echo "4. Create your admin user"
-echo "5. Install additional plugins: Email Extension Plugin"
-echo "=========================================="
+printf '\n'
+printf '%s\n' "=========================================="
+printf '\n'
+printf '%s\n' "Next steps:"
+printf '%s\n' "1. Open http://localhost:8080 in your browser"
+printf '%s\n' "2. Enter the initial admin password shown above"
+printf '%s\n' "3. Install suggested plugins"
+printf '%s\n' "4. Create your admin user"
+printf '%s\n' "5. Install additional plugins: Email Extension Plugin"
+printf '%s\n' "=========================================="
