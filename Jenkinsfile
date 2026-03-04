@@ -75,15 +75,8 @@ pipeline {
         }
         
         stage('Send Notification') {
-            when {
-                expression {
-                    // Check if there are test failures
-                    def report = readJSON file: 'test_report.json'
-                    return !report.all_passed
-                }
-            }
             steps {
-                echo 'Sending failure notification email...'
+                echo 'Sending notification email...'
                 sh '''
                     . ${VENV_DIR}/bin/activate
                     python scripts/send_email.py \
@@ -96,7 +89,8 @@ pipeline {
                         --recipients ${EMAIL_RECIPIENTS} \
                         --job-name "${JOB_NAME}" \
                         --build-number "${BUILD_NUMBER}" \
-                        --build-url "${BUILD_URL}"
+                        --build-url "${BUILD_URL}" \
+                        --always-send
                 '''
             }
         }
