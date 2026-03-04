@@ -16,11 +16,6 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt && \
     rm /tmp/requirements.txt
 
-# Copy project files into Jenkins workspace
-COPY scripts/ /var/jenkins_home/workspace/scripts/
-COPY tests/ /var/jenkins_home/workspace/tests/
-COPY Jenkinsfile /var/jenkins_home/workspace/Jenkinsfile
-
 # Switch back to jenkins user
 USER jenkins
 
