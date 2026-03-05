@@ -9,7 +9,8 @@ RUN apt-get update && \
         python3 \
         python3-pip \
         python3-venv && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -f /usr/lib/python*/EXTERNALLY-MANAGED
 
 # Copy requirements and install Python packages globally
 COPY requirements.txt /tmp/requirements.txt

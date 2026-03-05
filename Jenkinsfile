@@ -47,8 +47,8 @@ pipeline {
             steps {
                 echo 'Setting up Python virtual environment...'
                 sh '''
-                    python3 -m venv ${VENV_DIR}
-                    . ${VENV_DIR}/bin/activate
+                    python3 -m venv "${VENV_DIR}"
+                    . "${VENV_DIR}/bin/activate"
                     pip install --upgrade pip
                     pip install -r requirements.txt
                 '''
@@ -59,7 +59,7 @@ pipeline {
             steps {
                 echo 'Running test suite...'
                 sh '''
-                    . ${VENV_DIR}/bin/activate
+                    . "${VENV_DIR}/bin/activate"
                     python scripts/run_tests.py \
                         --test-dir tests \
                         --pattern "test_*.py" \
@@ -78,7 +78,7 @@ pipeline {
             steps {
                 echo 'Sending notification email...'
                 sh '''
-                    . ${VENV_DIR}/bin/activate
+                    . "${VENV_DIR}/bin/activate"
                     python scripts/send_email.py \
                         --report test_report.json \
                         --smtp-server ${SMTP_SERVER} \
