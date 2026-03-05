@@ -81,12 +81,6 @@ pipeline {
                     . "${VENV_DIR}/bin/activate"
                     python scripts/send_email.py \
                         --report test_report.json \
-                        --smtp-server ${SMTP_SERVER} \
-                        --smtp-port ${SMTP_PORT} \
-                        --smtp-user ${SMTP_USER} \
-                        --smtp-password ${SMTP_PASSWORD} \
-                        --sender ${EMAIL_SENDER} \
-                        --recipients ${EMAIL_RECIPIENTS} \
                         --job-name "${JOB_NAME}" \
                         --build-number "${BUILD_NUMBER}" \
                         --build-url "${BUILD_URL}" \

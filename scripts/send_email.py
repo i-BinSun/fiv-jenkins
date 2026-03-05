@@ -105,8 +105,7 @@ def create_email_body(report, job_name="", build_number="", build_url=""):
             <h3 style="margin: 0 0 10px 0; color: #495057;">Build Information</h3>
             <table style="font-size: 14px;">
                 {"<tr><td style='padding: 2px 10px 2px 0; font-weight: bold;'>Job Name:</td><td>" + job_name + "</td></tr>" if job_name else ""}
-                {"<tr><td style='padding: 2px 10px 2px 0; font-weight: bold;'>Build Number:</td><td>#" + str(build_number) + "</td></tr>" if build_number else ""}
-                {"<tr><td style='padding: 2px 10px 2px 0; font-weight: bold;'>Build URL:</td><td><a href='" + build_url + "'>" + build_url + "</a></td></tr>" if build_url else ""}
+                {"<tr><td style='padding: 2px 10px 2px 0; font-weight: bold;'>Build Number:</td><td><a href='" + build_url + "'>#" + str(build_number) + "</a></td></tr>" if build_number and build_url else "<tr><td style='padding: 2px 10px 2px 0; font-weight: bold;'>Build Number:</td><td>#" + str(build_number) + "</td></tr>" if build_number else ""}
             </table>
         </div>
         """
