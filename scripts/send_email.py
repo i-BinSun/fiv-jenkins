@@ -90,11 +90,11 @@ def create_email_body(report, job_name="", build_number="", build_url=""):
     # Determine overall status
     if report.get("all_passed"):
         status_color = "#28a745"
-        status_text = "✅ ALL TESTS PASSED"
+        status_text = "ALL TESTS PASSED"
         status_bg = "#d4edda"
     else:
         status_color = "#dc3545"
-        status_text = "❌ TESTS FAILED"
+        status_text = "TESTS FAILED"
         status_bg = "#f8d7da"
     
     # Build info section
@@ -307,11 +307,11 @@ def send_email(report, config):
     
     # Set subject based on test status
     if report.get("all_passed"):
-        subject = "✅ Tests Passed"
+        subject = "Tests Passed"
     else:
         summary = report.get("summary", {})
         failed_count = summary.get("failed", 0) + summary.get("errors", 0)
-        subject = f"❌ Tests Failed ({failed_count} failures)"
+        subject = f"Tests Failed ({failed_count} failures)"
     
     if config.get("job_name"):
         subject = f"[{config['job_name']}] {subject}"
