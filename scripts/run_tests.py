@@ -190,9 +190,9 @@ def print_summary(report):
     print("-" * 60)
     
     if report.get("all_passed"):
-        print("✅ ALL TESTS PASSED!")
+        print("ALL TESTS PASSED!")
     else:
-        print("❌ SOME TESTS FAILED!")
+        print("SOME TESTS FAILED!")
         
         # Print failure details
         if report.get("failures"):

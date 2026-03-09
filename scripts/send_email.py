@@ -25,7 +25,7 @@ def format_failure_html(failure):
     """Format a single failure as HTML"""
     return f"""
     <div style="margin-bottom: 20px; padding: 15px; background-color: #fff3f3; border-left: 4px solid #dc3545; border-radius: 4px;">
-        <h3 style="color: #dc3545; margin: 0 0 10px 0;">❌ {failure['test_name']}</h3>
+        <h3 style="color: #dc3545; margin: 0 0 10px 0;">{failure['test_name']}</h3>
         <table style="font-size: 14px; color: #333;">
             <tr>
                 <td style="padding: 2px 10px 2px 0; font-weight: bold;">Class:</td>
@@ -56,7 +56,7 @@ def format_error_html(error):
     """Format a single error as HTML"""
     return f"""
     <div style="margin-bottom: 20px; padding: 15px; background-color: #fff8e6; border-left: 4px solid #ffc107; border-radius: 4px;">
-        <h3 style="color: #856404; margin: 0 0 10px 0;">⚠️ {error['test_name']}</h3>
+        <h3 style="color: #856404; margin: 0 0 10px 0;">{error['test_name']}</h3>
         <table style="font-size: 14px; color: #333;">
             <tr>
                 <td style="padding: 2px 10px 2px 0; font-weight: bold;">Class:</td>

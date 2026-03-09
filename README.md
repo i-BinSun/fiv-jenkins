@@ -2,7 +2,7 @@
 
 本项目提供了在 Ubuntu 上部署 Jenkins 的完整解决方案，用于定期执行测试脚本并在测试失败时发送邮件通知。
 
-## 📁 项目结构
+## 项目结构
 
 ```
 fiv-jenkins/
@@ -22,7 +22,7 @@ fiv-jenkins/
     └── test_api_example.py # 示例测试文件
 ```
 
-## 🚀 快速开始
+## 快速开始
 
 ### 1a. Docker 方式部署（推荐）
 
@@ -141,7 +141,7 @@ triggers {
 - `0 8,18 * * 1-5` - 工作日 8:00 和 18:00
 - `H/30 * * * *` - 每30分钟
 
-## 📧 邮件配置说明
+## 邮件配置说明
 
 ### Gmail 配置
 
@@ -164,7 +164,7 @@ SMTP_PORT=587
 | QQ邮箱 | smtp.qq.com | 587 |
 | 163邮箱 | smtp.163.com | 465 |
 
-## 📊 测试报告格式
+## 测试报告格式
 
 测试运行后会生成 `test_report.json`，包含以下信息：
 
@@ -194,7 +194,7 @@ SMTP_PORT=587
 }
 ```
 
-## 🔧 本地测试
+## 本地测试
 
 在部署到 Jenkins 之前，可以在本地测试：
 
@@ -220,7 +220,7 @@ export EMAIL_RECIPIENTS=recipient@example.com
 python scripts/send_email.py --report test_report.json --always-send
 ```
 
-## 🔍 故障排除
+## 故障排除
 
 ### Jenkins 无法启动
 ```bash
@@ -243,7 +243,7 @@ cd /path/to/project
 python -m pytest tests/ -v
 ```
 
-## 📝 自定义扩展
+## 自定义扩展
 
 ### 添加更多测试目录
 修改 `Jenkinsfile` 中的测试命令：
