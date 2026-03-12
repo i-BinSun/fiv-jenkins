@@ -54,6 +54,7 @@ class Config:
     VERIFY_SSL = os.environ.get("FIV_VERIFY_SSL", "false").lower() == "true"
     SKIP_WRITE_TESTS = os.environ.get("SKIP_WRITE_TESTS", "false").lower() == "true"
     INGREDIENT_NAME = os.environ.get("FIV_INGREDIENT_NAME", "A0_main_CoreFw")
+    PROXY_URL = os.environ.get("INTEL_PROXY", False)
 
     # Endpoints
     ENDPOINT_GET_REQUIREMENTS = "/ifwi_check_proj_mandatory/{proj_id}"
@@ -74,6 +75,11 @@ def make_session() -> requests.Session:
     adapter = HTTPAdapter(max_retries=0)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
+    proxies = {
+        "http": Config.PROXY_URL if Config.PROXY_URL else "",
+        "https": Config.PROXY_URL if Config.PROXY_URL else ""
+    }
+    session.proxies.update(proxies)
     return session
 
 
